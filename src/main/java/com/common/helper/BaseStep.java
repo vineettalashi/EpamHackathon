@@ -16,7 +16,6 @@ public class BaseStep {
 	
 	public WebDriver driver;
 	
-	
 	public void initialize()
 	{	
 		
