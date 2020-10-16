@@ -1,4 +1,4 @@
-package com.epam.hackathon;
+package com.ui.pages;
 
 /**
  * Hello world!
