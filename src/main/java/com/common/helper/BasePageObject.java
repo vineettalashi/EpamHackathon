@@ -4,10 +4,10 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,12 +17,12 @@ import com.common.utils.ConfigProvider;
 
 public class BasePageObject{
 		
-		WebDriver driver;
+		public WebDriver driver;
 		public BasePageObject(WebDriver webdriver) {
 			this.driver = webdriver;
 		}
 		
-		void clickElement(By loc)
+		protected void clickElement(By loc)
 		{
 			WebElement ele = getElement(loc);
 			ele.click();
@@ -34,7 +34,7 @@ public class BasePageObject{
 			final By ElementLocator = Locator;
 			
 			FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-										.withTimeout(Duration.ofSeconds(Integer.parseInt(ConfigProvider.get("FluentWait")))).pollingEvery(Duration.ofSeconds(Integer.parseInt(ConfigProvider.get("PollingTime"))));
+										.withTimeout(Duration.ofSeconds(30)).pollingEvery(Duration.ofSeconds(5));
 			element = wait.until(new Function<WebDriver, WebElement>() 
 			{
 				public WebElement apply(WebDriver seldriver) { 
@@ -72,7 +72,7 @@ public class BasePageObject{
 			final By ElementLocator = Locator;
 			
 			FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-					.withTimeout(Duration.ofSeconds(Integer.parseInt(ConfigProvider.get("FluentWait")))).pollingEvery(Duration.ofSeconds(Integer.parseInt(ConfigProvider.get("PollingTime"))));
+					.withTimeout(Duration.ofSeconds(30)).pollingEvery(Duration.ofSeconds(5));
 			elements = wait.until(new Function<WebDriver, List<WebElement>>() 
 			{
 				public  List<WebElement> apply(WebDriver seldriver) { 
@@ -99,6 +99,13 @@ public class BasePageObject{
 			return elements;
 			
 			
+		}
+		
+		public JavascriptExecutor executeJSExecutor(String script,WebElement element) {
+			System.out.println("driver"+driver);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript(script,element);
+			return js;
 		}
 
 	}

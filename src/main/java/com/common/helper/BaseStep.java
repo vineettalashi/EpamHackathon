@@ -4,24 +4,25 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 /*import org.openqa.selenium.firefox.FirefoxDriver;*/
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import com.common.utils.ConfigProvider;
+import com.ui.reports.ExtentTestNGReportBuilder;
 
 
-public class BaseStep {
+public class BaseStep extends ExtentTestNGReportBuilder{
 	
 	public WebDriver driver;
 	
-	public void initialize()
+	public WebDriver initialize()
 	{	
 		
-		driver = getWebDriver(ConfigProvider.get("browser"));
+		driver = getWebDriver("chrome");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
+		return driver;
 	}
 	
 	public WebDriver getWebDriver(String browser)
@@ -34,9 +35,9 @@ public class BaseStep {
 		
 		else if(browser.equalsIgnoreCase("chrome")){
 			System.setProperty("webdriver.chrome.driver", ConfigProvider.get("chromeDriverPath"));
-			ChromeOptions chromeOptions = new ChromeOptions();
-			chromeOptions.addArguments("--disable-infobars");
-			driver = new ChromeDriver(chromeOptions);
+			//ChromeOptions chromeOptions = new ChromeOptions();
+			/*chromeOptions.addArguments("--disable-infobars");*/
+			driver = new ChromeDriver();
 		}
 		else if(browser.equalsIgnoreCase("firefox")){
 						System.setProperty("webdriver.gecko.driver", ConfigProvider.get("FirefoxDriverPath"));

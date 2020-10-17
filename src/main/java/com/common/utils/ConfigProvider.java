@@ -13,14 +13,13 @@ public class ConfigProvider {
 
 	private static Properties prop = new Properties();
 	private static FileInputStream input;
-	private final static Logger logger = LoggerFactory.getLogger(ConfigProvider.class);
 
 	static {
 		try {
 			input = new FileInputStream(Constants.configFilePath);
 			prop.load(input);
 		} catch (IOException e) {
-			logger.warn("Config.properties not found!!!!");
+			System.out.println("Config.properties not found!!!!");
 		}
 	}
 	
